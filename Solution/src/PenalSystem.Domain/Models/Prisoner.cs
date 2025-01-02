@@ -6,7 +6,7 @@ public class Prisoner : Person
     public DateTime OriginalReleaseDate { get; set; }
     public DateTime UpdatedReleaseDate { get; set; }
 
-    List<Book> Books { get; set; } = [];
-    List<Study> Studies { get; set; } = [];
-    List<DayOfWork> DaysOfWork { get; set; } = [];
+    public List<Book> Books { get; set; } = [];
+    public List<Study> Studies { get; set; } = [];
+    public List<DayOfWork> DaysOfWork { get; set; } = [];
 }
