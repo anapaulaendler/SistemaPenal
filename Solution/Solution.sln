@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D777602D-3E5E-4C9D-80E8-1CDE12EE6CE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PenalSystem.Api", "src\PenalSystem.Api\PenalSystem.Api.csproj", "{3122BA6F-E75E-41B3-9DEC-A4A884C5B817}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PenalSystem.Domain", "src\PenalSystem.Domain\PenalSystem.Domain.csproj", "{DF49A0B9-50AA-4689-99DD-1AB3E3ACE7FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PenalSystem.Infra.CrossCutting.IoC", "src\PenalSystem.Infra.CrossCutting.IoC\PenalSystem.Infra.CrossCutting.IoC.csproj", "{59C11E36-EA0C-4571-94FB-62B158BE842B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PenalSystem.Infra.Data", "src\PenalSystem.Infra.Data\PenalSystem.Infra.Data.csproj", "{C6030156-D5A9-4D50-8936-B2F56E47114C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3122BA6F-E75E-41B3-9DEC-A4A884C5B817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3122BA6F-E75E-41B3-9DEC-A4A884C5B817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3122BA6F-E75E-41B3-9DEC-A4A884C5B817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3122BA6F-E75E-41B3-9DEC-A4A884C5B817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF49A0B9-50AA-4689-99DD-1AB3E3ACE7FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF49A0B9-50AA-4689-99DD-1AB3E3ACE7FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF49A0B9-50AA-4689-99DD-1AB3E3ACE7FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF49A0B9-50AA-4689-99DD-1AB3E3ACE7FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59C11E36-EA0C-4571-94FB-62B158BE842B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59C11E36-EA0C-4571-94FB-62B158BE842B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59C11E36-EA0C-4571-94FB-62B158BE842B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59C11E36-EA0C-4571-94FB-62B158BE842B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6030156-D5A9-4D50-8936-B2F56E47114C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6030156-D5A9-4D50-8936-B2F56E47114C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6030156-D5A9-4D50-8936-B2F56E47114C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6030156-D5A9-4D50-8936-B2F56E47114C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3122BA6F-E75E-41B3-9DEC-A4A884C5B817} = {D777602D-3E5E-4C9D-80E8-1CDE12EE6CE0}
+		{DF49A0B9-50AA-4689-99DD-1AB3E3ACE7FC} = {D777602D-3E5E-4C9D-80E8-1CDE12EE6CE0}
+		{59C11E36-EA0C-4571-94FB-62B158BE842B} = {D777602D-3E5E-4C9D-80E8-1CDE12EE6CE0}
+		{C6030156-D5A9-4D50-8936-B2F56E47114C} = {D777602D-3E5E-4C9D-80E8-1CDE12EE6CE0}
+	EndGlobalSection
+EndGlobal
