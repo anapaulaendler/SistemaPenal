@@ -1,4 +1,4 @@
-namespace Library.Domain.Interfaces;
+namespace PenalSystem.Domain.Interfaces;
 
 public interface IUnitOfWork
 {

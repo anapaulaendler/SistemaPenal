@@ -10,6 +10,8 @@ internal class BookConfiguration : IEntityTypeConfiguration<Book>
     {
         builder.ToTable("Books").HasKey(x => x.Id);
 
+        // builder.Ignore(x => x.DomainEvents);
+
         builder.Property(x => x.Id).IsRequired();
         builder.Property(x => x.PrisonerId).IsRequired();
 
