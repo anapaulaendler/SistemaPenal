@@ -1,6 +1,6 @@
 using PenalSystem.Domain.Interfaces;
 
-namespace PenalSystem.Domain.Models;
+namespace PenalSystem.Domain.Entities;
 
 public abstract class Person : IEntity
 {

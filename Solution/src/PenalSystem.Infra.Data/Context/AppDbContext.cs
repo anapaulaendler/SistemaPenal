@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PenalSystem.Domain.Models;
+using PenalSystem.Domain.Entities;
 
 namespace PenalSystem.Infra.Data.Context;
 

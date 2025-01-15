@@ -1,4 +1,4 @@
-using PenalSystem.Domain.Models;
+using PenalSystem.Domain.Entities;
 
 namespace PenalSystem.Domain.Interfaces;
 

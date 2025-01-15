@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PenalSystem.Domain.Models;
+using PenalSystem.Domain.Entities;
 
 namespace PenalSystem.Infra.Data.Configurations;
 
