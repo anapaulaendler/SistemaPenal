@@ -4,10 +4,10 @@ using PenalSystem.Domain.Entities;
 
 namespace PenalSystem.Domain.Mappers;
 
-public class BookProfile
+public class BookProfile : Profile
 {
     public BookProfile()
     {
-        Mapper.CreateMap<Book, BookDTO>();
+        CreateMap<Book, BookDTO>();
     }
 }
