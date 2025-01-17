@@ -5,5 +5,5 @@ namespace PenalSystem.Domain.Interfaces;
 
 public interface IEmployeeRepository : IRepositoryBase<Employee>
 {
-    Task<EmployeeDTO> GetEmployeeByCpfAsync(string cpf);
+    Task<Employee> GetEmployeeByCpfAsync(string cpf);
 }

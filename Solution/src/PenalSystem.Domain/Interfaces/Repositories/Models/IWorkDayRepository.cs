@@ -5,5 +5,5 @@ namespace PenalSystem.Domain.Interfaces;
 
 public interface IWorkDayRepository : IRepositoryBase<WorkDay>
 {
-    Task<List<WorkDayDTO>> GetWorkDayActivitiesByPrisonerIdAsync(Guid prisonerId);
+    Task<List<WorkDay>> GetWorkDayActivitiesByPrisonerIdAsync(Guid prisonerId);
 }

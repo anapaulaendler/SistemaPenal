@@ -5,5 +5,5 @@ namespace PenalSystem.Domain.Interfaces;
 
 public interface IStudyRepository : IRepositoryBase<Study>
 {
-    Task<List<StudyDTO>> GetStudyActivitiesByPrisonerIdAsync(Guid prisonerId);
+    Task<List<Study>> GetStudyActivitiesByPrisonerIdAsync(Guid prisonerId);
 }

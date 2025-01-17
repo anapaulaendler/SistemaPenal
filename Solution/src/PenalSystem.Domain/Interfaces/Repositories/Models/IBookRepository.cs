@@ -5,5 +5,5 @@ namespace PenalSystem.Domain.Interfaces;
 
 public interface IBookRepository : IRepositoryBase<Book>
 {
-    Task<List<BookDTO>> GetBookActivitiesByPrisonerIdAsync(Guid prisonerId);
+    Task<List<Book>> GetBookActivitiesByPrisonerIdAsync(Guid prisonerId);
 }
