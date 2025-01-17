@@ -2,9 +2,9 @@ using PenalSystem.Domain.DTOs;
 
 namespace PenalSystem.Domain.Interfaces;
 
-public interface IDayOfWorkService
+public interface IWorkDayService
 {
-    Task CreateDayOfWorkActivityAsync(DayOfWorkCreateDTO DayOfWork);
-    Task<List<DayOfWorkDTO>> GetDayOfWorkActivitiesByPrisonerIdAsync(Guid prisonerId);
-    Task<List<DayOfWorkDTO>> GetDayOfWorksAsync();
+    Task CreateWorkDayActivityAsync(WorkDayCreateDTO WorkDay);
+    Task<List<WorkDayDTO>> GetWorkDayActivitiesByPrisonerIdAsync(Guid prisonerId);
+    Task<List<WorkDayDTO>> GetWorkDaysAsync();
 }

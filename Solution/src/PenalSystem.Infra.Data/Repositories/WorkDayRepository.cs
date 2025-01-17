@@ -4,9 +4,9 @@ using PenalSystem.Infra.Data.Repositories.Base;
 
 namespace PenalSystem.Infra.Data.Repositories;
 
-public class DayOfWorkRepository : RepositoryBase<DayOfWork>
+public class WorkDayRepository : RepositoryBase<WorkDay>
 {
-    public DayOfWorkRepository(AppDbContext appContext) : base(appContext)
+    public WorkDayRepository(AppDbContext appContext) : base(appContext)
     {
     }
 }

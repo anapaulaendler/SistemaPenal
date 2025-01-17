@@ -4,9 +4,9 @@ using PenalSystem.Domain.Entities;
 
 namespace PenalSystem.Infra.Data.Configurations;
 
-internal class DayOfWorkConfiguration : IEntityTypeConfiguration<DayOfWork>
+internal class DayOfWorkConfiguration : IEntityTypeConfiguration<WorkDay>
 {
-    public void Configure(EntityTypeBuilder<DayOfWork> builder)
+    public void Configure(EntityTypeBuilder<WorkDay> builder)
     {
         builder.ToTable("DaysOfWork").HasKey(x => x.Id);
 

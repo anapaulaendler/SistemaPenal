@@ -10,5 +10,5 @@ public class Prisoner : Person
 
     public List<Book> Books { get; set; } = [];
     public List<Study> Studies { get; set; } = [];
-    public List<DayOfWork> DaysOfWork { get; set; } = [];
+    public List<WorkDay> DaysOfWork { get; set; } = [];
 }

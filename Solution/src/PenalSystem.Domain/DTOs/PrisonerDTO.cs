@@ -15,7 +15,7 @@ public class PrisonerDTO
 
     public List<BookDTO> Books { get; set; } = [];
     public List<StudyDTO> Studies { get; set; } = [];
-    public List<DayOfWorkDTO> DaysOfWork { get; set; } = [];
+    public List<WorkDayDTO> DaysOfWork { get; set; } = [];
 }
 
 public class PrisonerOnlyDTO

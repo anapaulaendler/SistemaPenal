@@ -1,6 +1,6 @@
 namespace PenalSystem.Domain.DTOs;
 
-public class DayOfWorkDTO
+public class WorkDayDTO
 {
     public Guid Id { get; set; }
     public Guid PrisonerId { get; set; }
@@ -9,7 +9,7 @@ public class DayOfWorkDTO
     public required PrisonerDTO Prisoner { get; set; }
 }
 
-public class DayOfWorkCreateDTO
+public class WorkDayCreateDTO
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid PrisonerId { get; set; }

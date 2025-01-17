@@ -1,6 +1,6 @@
 namespace PenalSystem.Domain.Entities;
 
-public class DayOfWork : Activity
+public class WorkDay : Activity
 {
     public string? Description { get; set; }
 }
