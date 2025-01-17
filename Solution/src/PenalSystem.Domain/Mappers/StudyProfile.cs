@@ -4,10 +4,16 @@ using PenalSystem.Domain.Entities;
 
 namespace PenalSystem.Domain.Mappers;
 
-public class StudyProfile
+public class StudyProfile : Profile
 {
     public StudyProfile()
     {
-        Mapper.CreateMap<Study, StudyDTO>();
+        CreateMap<Study, StudyDTO>();
+        CreateMap<Study, StudyCreateDTO>();
+
+        CreateMap<StudyDTO, StudyCreateDTO>();
+        CreateMap<StudyDTO, Study>();
+
+        CreateMap<StudyCreateDTO, Study>();
     }
 }

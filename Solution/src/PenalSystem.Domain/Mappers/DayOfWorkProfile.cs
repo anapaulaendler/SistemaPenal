@@ -4,10 +4,16 @@ using PenalSystem.Domain.Entities;
 
 namespace PenalSystem.Domain.Mappers;
 
-public class DayOfWorkProfile
+public class DayOfWorkProfile : Profile
 {
     public DayOfWorkProfile()
     {
-        Mapper.CreateMap<DayOfWork, DayOfWorkDTO>();
+        CreateMap<DayOfWork, DayOfWorkDTO>();
+        CreateMap<DayOfWork, DayOfWorkCreateDTO>();
+
+        CreateMap<DayOfWorkDTO, DayOfWorkCreateDTO>();
+        CreateMap<DayOfWorkDTO, DayOfWork>();
+
+        CreateMap<DayOfWorkCreateDTO, DayOfWork>();
     }
 }
