@@ -18,6 +18,8 @@ internal class PrisonerConfiguration : IEntityTypeConfiguration<Prisoner>
         builder.Property(x => x.ArrivalDay).HasColumnName("Arrival Date").IsRequired();
         builder.Property(x => x.OriginalReleaseDate).HasColumnName("Original Release Date").IsRequired();
         builder.Property(x => x.UpdatedReleaseDate).HasColumnName("Updated Release Date").IsRequired();
+        builder.Property(x => x.BookCounter).HasColumnName("Books Counter").IsRequired();
+        builder.Property(x => x.CurrentYear).HasColumnName("Current Year").IsRequired();
 
         builder.HasMany(x => x.Books).WithOne(x => x.Prisoner).IsRequired();
         builder.HasMany(x => x.Studies).WithOne(x => x.Prisoner).IsRequired();

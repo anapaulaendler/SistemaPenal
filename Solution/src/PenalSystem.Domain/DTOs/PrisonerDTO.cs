@@ -11,7 +11,7 @@ public class PrisonerDTO
     public DateTime OriginalReleaseDate { get; set; }
     public DateTime UpdatedReleaseDate { get; set; }
     public int BookCounter { get; set; }
-    public DateTime CurrentYear { get; set; }
+    public int CurrentYear { get; set; }
 
     public List<BookDTO> Books { get; set; } = [];
     public List<StudyDTO> Studies { get; set; } = [];
@@ -37,7 +37,7 @@ public class PrisonerCreateDTO
     public required string BirthDate { get; set; }
     public required string Cpf { get; set; }
     public int BookCounter { get; set; } = 0;
-    public DateTime CurrentYear { get; set; } = DateTime.Now.Year;
+    public int CurrentYear { get; set; } = DateTime.Now.Year;
 
     public DateTime ArrivalDay { get; set; }
     public DateTime OriginalReleaseDate { get; set; }

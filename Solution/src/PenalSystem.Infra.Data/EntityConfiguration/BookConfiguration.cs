@@ -10,13 +10,10 @@ internal class BookConfiguration : IEntityTypeConfiguration<Book>
     {
         builder.ToTable("Books").HasKey(x => x.Id);
 
-        // builder.Ignore(x => x.DomainEvents);
-
         builder.Property(x => x.Id).IsRequired();
         builder.Property(x => x.PrisonerId).IsRequired();
 
-        builder.Property(x => x.Counter).HasColumnName("Counter").IsRequired();
-        builder.Property(x => x.CurrentYear).HasColumnName("Current Year").IsRequired();
+        builder.Property(x => x.Isbn).HasMaxLength(11).IsFixedLength().IsRequired();
         
         builder.HasOne(x => x.Prisoner).WithMany(x => x.Books).IsRequired();
     }

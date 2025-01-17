@@ -13,7 +13,6 @@ internal class DayOfWorkConfiguration : IEntityTypeConfiguration<DayOfWork>
         builder.Property(x => x.Id).IsRequired();
         builder.Property(x => x.PrisonerId).IsRequired();
 
-        builder.Property(x => x.Counter).HasColumnName("Counter").IsRequired();
         builder.Property(x => x.Description).HasColumnName("Description").IsRequired();
         
         builder.HasOne(x => x.Prisoner).WithMany(x => x.DaysOfWork).IsRequired();
