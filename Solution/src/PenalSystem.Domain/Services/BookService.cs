@@ -1,3 +1,4 @@
+using AutoMapper;
 using PenalSystem.Domain.DTOs;
 using PenalSystem.Domain.Entities;
 using PenalSystem.Domain.Interfaces;
@@ -9,17 +10,20 @@ public class BookService : IBookService
     private readonly IBookRepository _bookRepository;
     private readonly IPrisonerRepository _prisonerRepository;
     private readonly IUnitOfWork _uow;
+    private readonly IMapper _mapper;
 
-    public BookService(IBookRepository bookRepository, IPrisonerRepository prisonerRepository, IUnitOfWork uow)
+    public BookService(IBookRepository bookRepository, IPrisonerRepository prisonerRepository, IUnitOfWork uow, IMapper mapper)
     {
         _bookRepository = bookRepository;
         _prisonerRepository = prisonerRepository;
         _uow = uow;
+        _mapper = mapper;
     }
 
-    public async Task CreateBookActivityAsync(BookCreateDTO book)
+    public async Task CreateBookActivityAsync(BookCreateDTO bookCreateDTO)
     {
         await _uow.BeginTransactionAsync();
+        Book book = _mapper.Map<Book>(bookCreateDTO);
 
         var prisoner = await _prisonerRepository.GetByIdAsync(book.PrisonerId);
 

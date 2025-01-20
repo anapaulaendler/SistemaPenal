@@ -4,7 +4,7 @@ namespace PenalSystem.Domain.Interfaces;
 
 public interface IBookService
 {
-    Task CreateBookActivityAsync(BookCreateDTO book);
+    Task<OperationResult> CreateBookActivityAsync(BookCreateDTO book);
     Task<List<BookDTO>> GetBookActivitiesByPrisonerIdAsync(Guid prisonerId);
     Task<List<BookDTO>> GetBooksAsync();
 }
