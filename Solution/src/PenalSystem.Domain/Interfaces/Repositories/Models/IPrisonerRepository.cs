@@ -5,5 +5,5 @@ namespace PenalSystem.Domain.Interfaces;
 
 public interface IPrisonerRepository : IRepositoryBase<Prisoner>
 {
-    Task <Prisoner> GetPrisonerByCpfAsync (string cpf);
+    Task <Prisoner> GetPrisonerByCpfAsync (string cpf, CancellationToken cancellation = default);
 }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using PenalSystem.Domain.DTOs;
 using PenalSystem.Domain.Entities;
+using PenalSystem.Domain.Extensions;
 using PenalSystem.Domain.Interfaces;
 
 namespace PenalSystem.Domain.Services;
@@ -20,7 +21,7 @@ public class BookService : IBookService
         _mapper = mapper;
     }
 
-    public async Task CreateBookActivityAsync(BookCreateDTO bookCreateDTO)
+    public async Task<OperationResult<Book>> CreateBookActivityAsync(BookCreateDTO bookCreateDTO)
     {
         await _uow.BeginTransactionAsync();
         Book book = _mapper.Map<Book>(bookCreateDTO);

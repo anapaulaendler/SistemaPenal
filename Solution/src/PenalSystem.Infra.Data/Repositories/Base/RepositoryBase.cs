@@ -16,18 +16,18 @@ public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : 
         _ctx = appContext;
     }
 
-    public async Task AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity, CancellationToken cancellation = default)
     {
         await _dbSet.AddAsync(entity);
     }
 
-    public Task Delete(TEntity entity)
+    public Task Delete(TEntity entity, CancellationToken cancellation)
     {
         _dbSet.Remove(entity);
         return Task.CompletedTask;
     }
 
-    public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null)
+    public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null, CancellationToken cancellation = default)
     {
         var query = _dbSet.AsQueryable();
 
@@ -41,7 +41,7 @@ public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : 
         return await query.ToListAsync();
     }
 
-    public async Task<TEntity> GetByIdAsync(Guid id)
+    public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellation)
     {
         var entity = await _dbSet.FindAsync(id);
 
@@ -53,7 +53,7 @@ public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : 
         return entity;
     }
 
-    public Task Update(TEntity entity)
+    public Task Update(TEntity entity, CancellationToken cancellation)
     {
         _dbSet.Update(entity);
         return Task.CompletedTask;
