@@ -32,6 +32,15 @@ public class WorkDayService : ActivityService<IWorkDayRepository>, IWorkDayServi
             workDay.Prisoner = prisoner;
 
             await _repository.AddAsync(workDay, cancellation);
+
+            var wordDays = await GetWorkDayActivitiesByPrisonerIdAsync(prisoner.Id);
+
+            if (wordDays.Count() % 3 == 0)
+            {
+                await ReducePrisonerPenalty(prisoner.Id, -1);
+                await _prisonerRepository.Update(prisoner);
+            }
+
             await _uow.CommitTransactionAsync();
 
             result = new OperationResult<WorkDay> { Value = workDay };

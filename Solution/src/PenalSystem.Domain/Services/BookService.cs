@@ -32,6 +32,10 @@ public class BookService : ActivityService<IBookRepository>, IBookService
             book.Prisoner = prisoner;
 
             await _repository.AddAsync(book, cancellation);
+
+            await ReducePrisonerPenalty(prisoner.Id, -3);
+            await _prisonerRepository.Update(prisoner);
+            
             await _uow.CommitTransactionAsync();
 
             result = new OperationResult<Book> { Value = book };

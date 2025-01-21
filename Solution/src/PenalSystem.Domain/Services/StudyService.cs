@@ -32,6 +32,15 @@ public class StudyService : ActivityService<IStudyRepository>, IStudyService
             study.Prisoner = prisoner;
 
             await _repository.AddAsync(study, cancellation);
+
+            var studies = await GetStudyActivitiesByPrisonerIdAsync(prisoner.Id);
+
+            if (studies.Count() % 3 == 0)
+            {
+                await ReducePrisonerPenalty(prisoner.Id, -1);
+                await _prisonerRepository.Update(prisoner);
+            }
+
             await _uow.CommitTransactionAsync();
 
             result = new OperationResult<Study> { Value = study };

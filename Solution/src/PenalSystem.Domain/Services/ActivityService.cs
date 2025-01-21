@@ -19,14 +19,14 @@ public abstract class ActivityService<TRepository>
         _repository = repository;
     }
 
-    public async Task ReducePrisonerPenalty(Guid prisonerId)
+    public async Task ReducePrisonerPenalty(Guid prisonerId, int daysReduced)
     {
         var prisoner = await ValidatePrisonerAsync(prisonerId);
 
         await _uow.BeginTransactionAsync();
         try
         {
-            prisoner.UpdatedReleaseDate = prisoner.UpdatedReleaseDate.AddDays(-3);
+            prisoner.UpdatedReleaseDate = prisoner.UpdatedReleaseDate.AddDays(daysReduced);
 
             await _prisonerRepository.Update(prisoner);
             await _uow.CommitTransactionAsync();

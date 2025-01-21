@@ -13,6 +13,7 @@ internal class StudyConfiguration : IEntityTypeConfiguration<Study>
         builder.Property(x => x.Id).IsRequired();
         builder.Property(x => x.PrisonerId).IsRequired();
 
+        builder.Property(x => x.Date).IsRequired();
         builder.Property(x => x.Subject).HasColumnName("Subject").IsRequired();
         
         builder.HasOne(x => x.Prisoner).WithMany(x => x.Studies).IsRequired();
