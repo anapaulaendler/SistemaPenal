@@ -1,21 +1,23 @@
+using PenalSystem.Infra.CrossCutting.IoC;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+DependencyInjectionBootstrap.Register(builder.Services, builder.Configuration);
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddAuthorization();
+builder.Services.AddMemoryCache();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
