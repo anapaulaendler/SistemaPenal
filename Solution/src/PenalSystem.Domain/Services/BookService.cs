@@ -21,62 +21,89 @@ public class BookService : IBookService
         _mapper = mapper;
     }
 
-    public async Task<OperationResult<Book>> CreateBookActivityAsync(BookCreateDTO bookCreateDTO)
+    public async Task<OperationResult<Book>> CreateBookActivityAsync(BookCreateDTO bookCreateDTO, CancellationToken cancellation = default)
     {
-        await _uow.BeginTransactionAsync();
-        Book book = _mapper.Map<Book>(bookCreateDTO);
+        var result = new OperationResult<Book>();
 
-        var prisoner = await _prisonerRepository.GetByIdAsync(book.PrisonerId);
-
-        var newBook = new Book()
+        if (bookCreateDTO is null || bookCreateDTO.PrisonerId == Guid.Empty)
         {
-            PrisonerId = book.PrisonerId,
-            Isbn = book.Isbn,
-            Prisoner = prisoner,
-        };
+            return new OperationResult<Book>(
+                new ResultMessage("Invalid book creation request.", ResultTypes.Error));
+        }
 
-        await _bookRepository.AddAsync(newBook);
-        await _uow.CommitTransactionAsync();
+        await _uow.BeginTransactionAsync();
+        try
+        {
+            var prisoner = await _prisonerRepository.GetByIdAsync(bookCreateDTO.PrisonerId);
+            if (prisoner is null)
+            {
+                return new OperationResult<Book>(
+                    new ResultMessage("Prisoner not found.", ResultTypes.Error));
+            }
 
-    // public virtual async Task<OperationResult<TCreateDTO>> AddAsync(TCreateDTO itemToCreate, CancellationToken cancellationToken = default(CancellationToken))
-    // {
-    //     TEntity entity = _mapper.Map<TEntity>(itemToCreate);
-    //     OperationResult operationResult = await OnAddingAsync(entity, cancellationToken);
-    //     if (!operationResult.IsValid)
-    //     {
-    //         return operationResult.Cast(itemToCreate);
-    //     }
+            var book = _mapper.Map<Book>(bookCreateDTO);
+            book.Prisoner = prisoner;
 
-    //     await _repository.AddAsync(entity, cancellationToken);
-    //     OperationResult result = await _uow.SaveChangesAsync(cancellationToken);
-    //     if (result.IsValid)
-    //     {
-    //         await OnAddedAsync(new AddedEntityEventArgs<TEntity, object>(entity, itemToCreate), cancellationToken);
-    //     }
+            await _bookRepository.AddAsync(book, cancellation);
+            await _uow.CommitTransactionAsync();
 
-    //     return result.Cast(itemToCreate);
-    // }
+            result = new OperationResult<Book> { Value = book };
+        }
+        catch (Exception ex)
+        {
+            await _uow.RollbackTransactionAsync();
+            return new OperationResult<Book>(
+                new ResultMessage($"Failed to create book activity: {ex.Message}", ResultTypes.Error));
+        }
+
+        return result;
     }
 
-    public Task<List<BookDTO>> GetBookActivitiesByPrisonerIdAsync(Guid prisonerId)
+    public async Task<List<BookDTO>> GetBookActivitiesByPrisonerIdAsync(Guid prisonerId, CancellationToken cancellation = default)
     {
-        throw new NotImplementedException();
+        if (prisonerId == Guid.Empty)
+            throw new ArgumentException("Invalid prisoner ID.");
+
+        var books = await _bookRepository.GetBooksByPrisonerIdAsync(prisonerId, cancellation);
+        // implement later!!!!!!!!!!!!!!!!!!
+        return books.Select(book => _mapper.Map<BookDTO>(book)).ToList();
     }
 
-    public Task<List<BookDTO>> GetBooksAsync()
+    public async Task<List<BookDTO>> GetBooksAsync(CancellationToken cancellation = default)
     {
-        throw new NotImplementedException();
+        var books = await _bookRepository.GetAsync();
+        // var books = await _bookRepository.GetAsync(cancellation);
+        return books.Select(book => _mapper.Map<BookDTO>(book)).ToList();
     }
 
     public async Task ReducePrisonerPenalty(Guid prisonerId)
     {
+        if (prisonerId == Guid.Empty)
+            throw new ArgumentException("Invalid prisoner ID.");
+
         await _uow.BeginTransactionAsync();
+        try
+        {
+            var prisoner = await _prisonerRepository.GetByIdAsync(prisonerId);
+            if (prisoner == null)
+                throw new InvalidOperationException("Prisoner not found.");
 
-        Prisoner prisoner = await _prisonerRepository.GetByIdAsync(prisonerId);
+            prisoner.UpdatedReleaseDate = prisoner.UpdatedReleaseDate.AddDays(-3);
 
-        prisoner.UpdatedReleaseDate.AddDays(-3);
+            await _prisonerRepository.Update(prisoner);
+            await _uow.CommitTransactionAsync();
+        }
+        catch
+        {
+            await _uow.RollbackTransactionAsync();
+            throw;
+        }
+    }
 
-        await _prisonerRepository.Update(prisoner);
-        await _uow.CommitTransactionAsync();
+    private async Task ValidatePrisonerAsync(Guid prisonerId)
+    {
+        var prisoner = await _prisonerRepository.GetByIdAsync(prisonerId);
+        if (prisoner == null)
+            throw new InvalidOperationException("Prisoner not found.");
     }
 }
