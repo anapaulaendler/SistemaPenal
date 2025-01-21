@@ -12,7 +12,7 @@ public class PrisonerRepository : RepositoryBase<Prisoner>, IPrisonerRepository
     {
     }
 
-    public async Task<Prisoner> GetPrisonerByCpfAsync(string cpf)
+    public async Task<Prisoner> GetPrisonerByCpfAsync(string cpf, CancellationToken cancellation = default)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(x => x.Cpf == cpf);
 

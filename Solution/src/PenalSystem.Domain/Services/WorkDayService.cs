@@ -1,33 +1,63 @@
+using AutoMapper;
 using PenalSystem.Domain.DTOs;
+using PenalSystem.Domain.Entities;
+using PenalSystem.Domain.Extensions;
 using PenalSystem.Domain.Interfaces;
 
 namespace PenalSystem.Domain.Services;
 
-public class WorkDayService : IWorkDayService
+public class WorkDayService : ActivityService<IWorkDayRepository>, IWorkDayService
 {
-    private readonly IWorkDayRepository _workDayRepository;
-    private readonly IPrisonerRepository _prisonerRepository;
-    private readonly IUnitOfWork _uow;
-
-    public WorkDayService(IWorkDayRepository workDayRepository, IPrisonerRepository prisonerRepository, IUnitOfWork uow)
+    public WorkDayService(IWorkDayRepository repository, IPrisonerRepository prisonerRepository, IUnitOfWork uow, IMapper mapper)
+        : base(prisonerRepository, uow, mapper, repository)
     {
-        _workDayRepository = workDayRepository;
-        _prisonerRepository = prisonerRepository;
-        _uow = uow;
     }
 
-    public Task CreateWorkDayActivityAsync(WorkDayCreateDTO WorkDay)
+    public async Task<OperationResult<WorkDay>> CreateWorkDayActivityAsync(WorkDayCreateDTO workDayCreateDTO, CancellationToken cancellation = default)
     {
-        throw new NotImplementedException();
+        var result = new OperationResult<WorkDay>();
+
+        if (workDayCreateDTO is null || workDayCreateDTO.PrisonerId == Guid.Empty)
+        {
+            return new OperationResult<WorkDay>(
+                new ResultMessage("Invalid workDay creation request.", ResultTypes.Error));
+        }
+
+        await _uow.BeginTransactionAsync();
+        try
+        {
+            var prisoner = await ValidatePrisonerAsync(workDayCreateDTO.PrisonerId);
+
+            var workDay = _mapper.Map<WorkDay>(workDayCreateDTO);
+            workDay.Prisoner = prisoner;
+
+            await _repository.AddAsync(workDay, cancellation);
+            await _uow.CommitTransactionAsync();
+
+            result = new OperationResult<WorkDay> { Value = workDay };
+        }
+        catch (Exception ex)
+        {
+            await _uow.RollbackTransactionAsync();
+            return new OperationResult<WorkDay>(
+                new ResultMessage($"Failed to create workDay activity: {ex.Message}", ResultTypes.Error));
+        }
+
+        return result;
     }
 
-    public Task<List<WorkDayDTO>> GetWorkDayActivitiesByPrisonerIdAsync(Guid prisonerId)
+    public async Task<List<WorkDayDTO>> GetWorkDayActivitiesByPrisonerIdAsync(Guid prisonerId, CancellationToken cancellation = default)
     {
-        throw new NotImplementedException();
+        if (prisonerId == Guid.Empty)
+            throw new ArgumentException("Invalid prisoner ID.");
+
+        var workDays = await _repository.GetWorkDayActivitiesByPrisonerIdAsync(prisonerId, cancellation);
+        return workDays.Select(workDay => _mapper.Map<WorkDayDTO>(workDay)).ToList();
     }
 
-    public Task<List<WorkDayDTO>> GetWorkDaysAsync()
+    public async Task<List<WorkDayDTO>> GetWorkDaysAsync(CancellationToken cancellation = default)
     {
-        throw new NotImplementedException();
+        var workDays = await _repository.GetAsync(null, cancellation);
+        return workDays.Select(workDay => _mapper.Map<WorkDayDTO>(workDay)).ToList();
     }
 }

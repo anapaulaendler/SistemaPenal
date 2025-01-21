@@ -1,33 +1,63 @@
+using AutoMapper;
 using PenalSystem.Domain.DTOs;
+using PenalSystem.Domain.Entities;
+using PenalSystem.Domain.Extensions;
 using PenalSystem.Domain.Interfaces;
 
 namespace PenalSystem.Domain.Services;
 
-public class StudyService : IStudyService
+public class StudyService : ActivityService<IStudyRepository>, IStudyService
 {
-    private readonly IStudyRepository _studyRepository;
-    private readonly IPrisonerRepository _prisonerRepository;
-    private readonly IUnitOfWork _uow;
-
-    public StudyService(IStudyRepository studyRepository, IPrisonerRepository prisonerRepository, IUnitOfWork uow)
+    public StudyService(IStudyRepository repository, IPrisonerRepository prisonerRepository, IUnitOfWork uow, IMapper mapper)
+        : base(prisonerRepository, uow, mapper, repository)
     {
-        _studyRepository = studyRepository;
-        _prisonerRepository = prisonerRepository;
-        _uow = uow;
     }
 
-    public Task CreateStudyActivityAsync(StudyCreateDTO Study)
+    public async Task<OperationResult<Study>> CreateStudyActivityAsync(StudyCreateDTO studyCreateDTO, CancellationToken cancellation = default)
     {
-        throw new NotImplementedException();
+        var result = new OperationResult<Study>();
+
+        if (studyCreateDTO is null || studyCreateDTO.PrisonerId == Guid.Empty)
+        {
+            return new OperationResult<Study>(
+                new ResultMessage("Invalid study creation request.", ResultTypes.Error));
+        }
+
+        await _uow.BeginTransactionAsync();
+        try
+        {
+            var prisoner = await ValidatePrisonerAsync(studyCreateDTO.PrisonerId);
+
+            var study = _mapper.Map<Study>(studyCreateDTO);
+            study.Prisoner = prisoner;
+
+            await _repository.AddAsync(study, cancellation);
+            await _uow.CommitTransactionAsync();
+
+            result = new OperationResult<Study> { Value = study };
+        }
+        catch (Exception ex)
+        {
+            await _uow.RollbackTransactionAsync();
+            return new OperationResult<Study>(
+                new ResultMessage($"Failed to create study activity: {ex.Message}", ResultTypes.Error));
+        }
+
+        return result;
     }
 
-    public Task<List<StudyDTO>> GetStudyActivitiesByPrisonerIdAsync(Guid prisonerId)
+    public async Task<List<StudyDTO>> GetStudyActivitiesByPrisonerIdAsync(Guid prisonerId, CancellationToken cancellation = default)
     {
-        throw new NotImplementedException();
+        if (prisonerId == Guid.Empty)
+            throw new ArgumentException("Invalid prisoner ID.");
+
+        var studys = await _repository.GetStudyActivitiesByPrisonerIdAsync(prisonerId, cancellation);
+        return studys.Select(study => _mapper.Map<StudyDTO>(study)).ToList();
     }
 
-    public Task<List<StudyDTO>> GetStudysAsync()
+    public async Task<List<StudyDTO>> GetStudysAsync(CancellationToken cancellation = default)
     {
-        throw new NotImplementedException();
+        var studys = await _repository.GetAsync(null, cancellation);
+        return studys.Select(study => _mapper.Map<StudyDTO>(study)).ToList();
     }
 }

@@ -13,7 +13,7 @@ public class StudyRepository : RepositoryBase<Study>, IStudyRepository
     {
     }
 
-    public async Task<List<Study>> GetStudyActivitiesByPrisonerIdAsync(Guid prisonerId)
+    public async Task<List<Study>> GetStudyActivitiesByPrisonerIdAsync(Guid prisonerId, CancellationToken cancellation = default)
     {
         List<Study> studies = [];
         studies = await _dbSet.Where(x => x.PrisonerId == prisonerId).ToListAsync();

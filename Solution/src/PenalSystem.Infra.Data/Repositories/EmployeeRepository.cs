@@ -13,7 +13,7 @@ public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
     {
     }
 
-    public async Task<Employee> GetEmployeeByCpfAsync(string cpf)
+    public async Task<Employee> GetEmployeeByCpfAsync(string cpf, CancellationToken cancellation = default)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(x => x.Cpf == cpf);
 

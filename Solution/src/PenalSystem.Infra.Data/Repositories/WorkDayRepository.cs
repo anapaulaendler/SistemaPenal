@@ -12,7 +12,7 @@ public class WorkDayRepository : RepositoryBase<WorkDay>, IWorkDayRepository
     {
     }
 
-    public async Task<List<WorkDay>> GetWorkDayActivitiesByPrisonerIdAsync(Guid prisonerId)
+    public async Task<List<WorkDay>> GetWorkDayActivitiesByPrisonerIdAsync(Guid prisonerId, CancellationToken cancellation = default)
     {
         List<WorkDay> workDays = [];
         workDays = await _dbSet.Where(x => x.PrisonerId == prisonerId).ToListAsync();
