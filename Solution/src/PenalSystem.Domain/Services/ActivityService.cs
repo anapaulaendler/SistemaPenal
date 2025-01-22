@@ -1,5 +1,6 @@
 using AutoMapper;
 using PenalSystem.Domain.Entities;
+using PenalSystem.Domain.Extensions;
 using PenalSystem.Domain.Interfaces;
 
 namespace PenalSystem.Domain.Services;

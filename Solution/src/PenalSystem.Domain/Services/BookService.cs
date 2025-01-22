@@ -28,11 +28,22 @@ public class BookService : ActivityService<IBookRepository>, IBookService
         {
             var prisoner = await ValidatePrisonerAsync(bookCreateDTO.PrisonerId);
 
+            if (prisoner.CurrentYear != DateTime.Now.Year)
+            {
+                prisoner.BookCounter = 0;
+            }
+            
+            if (prisoner.BookCounter > 11)
+            {
+                return new OperationResult<Book>(
+                new ResultMessage("Invalid book creation request: already reached maximum of books per years", ResultTypes.Error));
+            }
+
             var book = _mapper.Map<Book>(bookCreateDTO);
             book.Prisoner = prisoner;
 
             await _repository.AddAsync(book, cancellation);
-
+            prisoner.BookCounter++;
             await ReducePrisonerPenalty(prisoner.Id, -3);
             await _prisonerRepository.Update(prisoner);
             
