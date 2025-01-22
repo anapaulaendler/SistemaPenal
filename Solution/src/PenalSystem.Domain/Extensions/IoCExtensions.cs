@@ -15,6 +15,10 @@ public static class IoCExtensions
         services.AddScoped<IPrisonerService, PrisonerService>();
 
         services.AddAutoMapper(typeof(BookService).Assembly);
+        services.AddAutoMapper(typeof(EmployeeService).Assembly);
+        services.AddAutoMapper(typeof(PrisonerService).Assembly);
+        services.AddAutoMapper(typeof(StudyService).Assembly);
+        services.AddAutoMapper(typeof(WorkDayService).Assembly);
 
         return services;
     }

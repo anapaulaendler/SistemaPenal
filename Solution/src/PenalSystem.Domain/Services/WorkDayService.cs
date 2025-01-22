@@ -33,9 +33,15 @@ public class WorkDayService : ActivityService<IWorkDayRepository>, IWorkDayServi
 
             await _repository.AddAsync(workDay, cancellation);
 
-            var wordDays = await GetWorkDayActivitiesByPrisonerIdAsync(prisoner.Id);
+            var workDays = await GetWorkDayActivitiesByPrisonerIdAsync(prisoner.Id);
 
-            if (wordDays.Count() % 3 == 0)
+            if (workDays.Any(x => x.Date == DateTime.Today))
+            {
+                return new OperationResult<WorkDay>(
+                    new ResultMessage("Invalid workDay creation request: Today's date has already been logged.", ResultTypes.Error));
+            }
+
+            if (workDays.Count() % 3 == 0)
             {
                 await ReducePrisonerPenalty(prisoner.Id, -1);
                 await _prisonerRepository.Update(prisoner);

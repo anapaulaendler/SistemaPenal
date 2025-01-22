@@ -35,6 +35,12 @@ public class StudyService : ActivityService<IStudyRepository>, IStudyService
 
             var studies = await GetStudyActivitiesByPrisonerIdAsync(prisoner.Id);
 
+            if (studies.Any(x => x.Date == DateTime.Today))
+            {
+                return new OperationResult<Study>(
+                    new ResultMessage("Invalid study creation request: Today's date has already been logged.", ResultTypes.Error));
+            }
+
             if (studies.Count() % 3 == 0)
             {
                 await ReducePrisonerPenalty(prisoner.Id, -1);
