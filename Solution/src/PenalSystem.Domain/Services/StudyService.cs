@@ -70,7 +70,7 @@ public class StudyService : ActivityService<IStudyRepository>, IStudyService
         return studys.Select(study => _mapper.Map<StudyDTO>(study)).ToList();
     }
 
-    public async Task<List<StudyDTO>> GetStudysAsync(CancellationToken cancellation = default)
+    public async Task<List<StudyDTO>> GetStudiesAsync(CancellationToken cancellation = default)
     {
         var studys = await _repository.GetAsync(null, cancellation);
         return studys.Select(study => _mapper.Map<StudyDTO>(study)).ToList();

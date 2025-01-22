@@ -17,7 +17,7 @@ public class OperationResult<TEntity>
 
     public TEntity? Value { get; init; }
     public bool HasErrors() => Messages.Count > 0;
-    public bool Sucesso => !HasErrors();
+    public bool Success => !HasErrors();
     public IReadOnlyCollection<ResultMessage> Messages { get; init; }
     public IEnumerable<ResultMessage> SearchForErrors() 
         => Messages.Where(message => message.ResultType == ResultTypes.Error);

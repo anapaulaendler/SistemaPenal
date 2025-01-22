@@ -8,5 +8,5 @@ public interface IStudyService
 {
     Task<OperationResult<Study>> CreateStudyActivityAsync(StudyCreateDTO studyCreateDTO, CancellationToken cancellation = default);
     Task<List<StudyDTO>> GetStudyActivitiesByPrisonerIdAsync(Guid prisonerId, CancellationToken cancellation = default);
-    Task<List<StudyDTO>> GetStudysAsync(CancellationToken cancellation = default);
+    Task<List<StudyDTO>> GetStudiesAsync(CancellationToken cancellation = default);
 }
