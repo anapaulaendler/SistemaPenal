@@ -33,10 +33,10 @@ public class BookService : ActivityService<IBookRepository>, IBookService
                 prisoner.BookCounter = 0;
             }
             
-            if (prisoner.BookCounter > 11)
+            if (prisoner.BookCounter >= 12)
             {
                 return new OperationResult<Book>(
-                new ResultMessage("Invalid book creation request: already reached maximum of books per years", ResultTypes.Error));
+                    new ResultMessage("Invalid book creation request: already reached maximum of books per year.", ResultTypes.Error));
             }
 
             var book = _mapper.Map<Book>(bookCreateDTO);
