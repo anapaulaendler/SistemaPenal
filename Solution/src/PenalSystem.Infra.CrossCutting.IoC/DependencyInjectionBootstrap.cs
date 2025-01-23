@@ -9,7 +9,7 @@ public static class DependencyInjectionBootstrap
 {
     public static IServiceCollection Register(this IServiceCollection services, IConfiguration configuration)
     {
-        DomainIoC.Register(services);
+        DomainIoC.Register(services, configuration);
         DataIoC.Register(services, configuration);
 
         return services;

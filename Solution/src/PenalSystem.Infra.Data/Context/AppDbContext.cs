@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using PenalSystem.Domain.Entities;
 
 namespace PenalSystem.Infra.Data.Context;
@@ -19,5 +20,13 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        
+        optionsBuilder.ConfigureWarnings(warnings => 
+            warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
     }
 }
