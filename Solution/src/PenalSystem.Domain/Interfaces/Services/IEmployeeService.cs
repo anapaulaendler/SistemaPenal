@@ -12,4 +12,5 @@ public interface IEmployeeService
     Task<OperationResult<Employee>> UpdateEmployeeAsync(Guid id, EmployeeUpdateDTO updatedEmployee, CancellationToken cancellation = default);
     Task<OperationResult<Employee>> DeleteEmployeeAsync(Guid id, CancellationToken cancellation = default); 
     Task<List<EmployeeDTO>> GetEmployeesAsync(CancellationToken cancellation = default);
+    Task<string> LoginAsync(UserLoginDTO userLoginDTO);
 }

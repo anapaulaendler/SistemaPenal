@@ -11,12 +11,14 @@ public class EmployeeService : IEmployeeService
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IUnitOfWork _uow;
     private readonly IMapper _mapper;
+    private readonly ITokenService _tokenService;
 
-    public EmployeeService(IEmployeeRepository employeeRepository, IUnitOfWork uow, IMapper mapper)
+    public EmployeeService(IEmployeeRepository employeeRepository, IUnitOfWork uow, IMapper mapper, ITokenService tokenService)
     {
         _employeeRepository = employeeRepository;
         _uow = uow;
         _mapper = mapper;
+        _tokenService = tokenService;
     }
 
     public async Task<OperationResult<Employee>> CreateEmployeeAsync(EmployeeCreateDTO employeeCreateDTO, CancellationToken cancellation = default)
@@ -98,6 +100,15 @@ public class EmployeeService : IEmployeeService
     {
         var employees = await _employeeRepository.GetAsync(null, cancellation);
         return employees.Select(employee => _mapper.Map<EmployeeDTO>(employee)).ToList();
+    }
+
+    public async Task<string> LoginAsync(UserLoginDTO userLoginDTO)
+    {
+        var user = await _employeeRepository.GetEmployeeByEmailAsync(userLoginDTO.UserEmail);
+        if (user == null || user.Password != userLoginDTO.Password)
+            throw new UnauthorizedAccessException("Invalid credentials");
+
+        return await _tokenService.GenerateTokenAsync(user);
     }
 
     public async Task<OperationResult<Employee>> UpdateEmployeeAsync(Guid id, EmployeeUpdateDTO updatedEmployee, CancellationToken cancellation = default)

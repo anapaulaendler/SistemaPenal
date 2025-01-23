@@ -24,4 +24,16 @@ public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
 
         return entity;
     }
+
+    public async Task<Employee> GetEmployeeByEmailAsync(string userEmail)
+    {
+        var entity = await _dbSet.FirstOrDefaultAsync(x => x.Email == userEmail);
+
+        if (entity is null)
+        {
+            throw new KeyNotFoundException();
+        }
+
+        return entity;
+    }
 }

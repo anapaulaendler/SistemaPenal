@@ -1,3 +1,4 @@
+using System.Security.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PenalSystem.Domain.DTOs;
@@ -80,5 +81,20 @@ public class EmployeeController : ControllerBase
     {
         var employees = await _employeeService.GetEmployeesAsync(cancellation);
         return Ok(employees);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] UserLoginDTO loginDto)
+    {
+        try
+        {
+            var token = await _employeeService.LoginAsync(loginDto);
+            return Ok(new { Token = token });
+        }
+        catch (AuthenticationException ex)
+        {
+            return Unauthorized(new { Message = ex.Message });
+        }
     }
 }
