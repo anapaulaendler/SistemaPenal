@@ -1,6 +1,6 @@
-using Library.Domain.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PenalSystem.Domain.Entities;
 using PenalSystem.Domain.Interfaces;
 using PenalSystem.Domain.Services;
 
@@ -24,6 +24,7 @@ public static class IoCExtensions
         services.AddScoped<IWorkDayService, WorkDayService>();
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IPrisonerService, PrisonerService>();
+        services.AddScoped<ITokenService, TokenService>();
 
         return services;
     }

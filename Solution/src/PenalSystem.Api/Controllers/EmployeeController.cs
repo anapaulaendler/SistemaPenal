@@ -22,7 +22,7 @@ public class EmployeeController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<IActionResult> CreateEmployeeAsync(EmployeeCreateDTO employeeCreateDTO, CancellationToken cancellation = default)
+    public async Task<IActionResult> CreateEmployeeAsync([FromBody] EmployeeCreateDTO employeeCreateDTO, CancellationToken cancellation = default)
     {
         var result = await _employeeService.CreateEmployeeAsync(employeeCreateDTO, cancellation);
         if (result.HasErrors())
@@ -90,7 +90,7 @@ public class EmployeeController : ControllerBase
         try
         {
             var token = await _employeeService.LoginAsync(loginDto);
-            return Ok(new { Token = token });
+            return Ok(new { LoginResponseDTO = token });
         }
         catch (AuthenticationException ex)
         {

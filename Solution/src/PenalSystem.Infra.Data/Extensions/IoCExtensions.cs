@@ -1,10 +1,10 @@
 using System.Text;
-using Library.Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PenalSystem.Domain.Entities;
 using PenalSystem.Domain.Interfaces;
 using PenalSystem.Infra.Context;
 using PenalSystem.Infra.Data.Context;

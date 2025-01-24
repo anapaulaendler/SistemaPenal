@@ -1,4 +1,3 @@
-using Library.Domain.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PenalSystem.Domain.Entities;
@@ -7,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Library.Application.Services
+namespace PenalSystem.Domain.Services
 {
     public class TokenService : ITokenService
     {

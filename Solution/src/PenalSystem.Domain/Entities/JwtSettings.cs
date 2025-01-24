@@ -1,4 +1,4 @@
-namespace Library.Domain.Models
+namespace PenalSystem.Domain.Entities
 {
     public class JwtSettings
     {
