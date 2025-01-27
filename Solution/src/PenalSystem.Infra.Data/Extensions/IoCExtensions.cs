@@ -44,7 +44,10 @@ public static class IoCExtensions
 
     public static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<AppDbContext>(x => x.UseSqlite(configuration.GetConnectionString(nameof(AppDbContext))));
+        services.AddDbContext<AppDbContext>(x => 
+        {
+            x.UseSqlite(configuration.GetConnectionString(nameof(AppDbContext)));
+        });
 
         return services;
     }

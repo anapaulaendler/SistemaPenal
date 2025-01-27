@@ -1,8 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
 using PenalSystem.Domain.Entities;
 using PenalSystem.Domain.Interfaces;
 using PenalSystem.Domain.Services;
+
 
 namespace PenalSystem.Domain.Extensions;
 

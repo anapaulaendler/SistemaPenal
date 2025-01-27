@@ -1,3 +1,5 @@
+using PenalSystem.Domain.Entities;
+
 namespace PenalSystem.Domain.DTOs;
 
 public class UserLoginDTO

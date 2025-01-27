@@ -55,8 +55,7 @@ public class EmployeeService : IEmployeeService
     {
         var result = new OperationResult<Employee>();
 
-        var employeeDTO = GetEmployeeByIdAsync(id);
-        var employee = _mapper.Map<Employee>(employeeDTO);
+        Employee employee = await _employeeRepository.GetByIdAsync(id);
 
         await _uow.BeginTransactionAsync();
         try
@@ -104,7 +103,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<string> LoginAsync(UserLoginDTO userLoginDTO)
     {
-        var user = await _employeeRepository.GetEmployeeByEmailAsync(userLoginDTO.UserEmail);
+        Employee user = await _employeeRepository.GetEmployeeByEmailAsync(userLoginDTO.UserEmail);
         if (user == null || user.Password != userLoginDTO.Password)
             throw new UnauthorizedAccessException("Invalid credentials");
 
@@ -115,7 +114,7 @@ public class EmployeeService : IEmployeeService
     {
         var result = new OperationResult<Employee>();
 
-        var employeeDTO = GetEmployeeByIdAsync(id);
+        EmployeeDTO employeeDTO = await GetEmployeeByIdAsync(id);
         var employee = _mapper.Map<Employee>(employeeDTO);
 
         await _uow.BeginTransactionAsync();
